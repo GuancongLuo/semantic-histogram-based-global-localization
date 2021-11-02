@@ -311,7 +311,7 @@ void pointCloudMapping::pointExtraction(vector<uchar> label){
     Mat image_gray;
     vector<int> centerX;
     vector<int> centerY;
-    cvtColor(image, image_gray, CV_BGR2GRAY);
+    cvtColor(image, image_gray, COLOR_BGR2GRAY);
     int imgRow = image.rows; int imgCol = image.cols;
     //cout<<image_gray.row(270)<<endl;
     pcl::PointCloud<pcl::PointXYZRGB>::Ptr temp(new pcl::PointCloud<pcl::PointXYZRGB>); 

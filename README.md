@@ -13,12 +13,12 @@ Results
 ![](https://github.com/gxytcrc/Semantic-Graph-based--global-Localization/blob/main/example/result2.png)
 
 # 1. Prerequisites #
-* Ubuntu
-* CMake
-* Eigen
-* Pangolin
-* OpenCV
-* PCL
+* Ubuntu = 20.04
+* CMake = 3.16.3
+* Eigen = 3.3.7
+* Pangolin - master
+* OpenCV = 4.5.4
+* PCL = 1.10
 
 # 2. Running #
 Clone the repository and catkin_make:
