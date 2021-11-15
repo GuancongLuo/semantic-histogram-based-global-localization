@@ -5,6 +5,7 @@ set(DCMAKE_BUILD_TYPE Release)
 
 project(mapAlignment)
 
+find_package(pybind11 REQUIRED)
 find_package(PCL REQUIRED)
 include_directories(${PCL_INCLUDE_DIRS})
 add_definitions(${PCL_DEFINITIONS})

@@ -33,6 +33,7 @@ void insertPose(string&dir, Mat&pose, int number){
     myfile.close();    
 }
 
+// no using
 void insertSYNTIAPose(string&dir, Mat&pose, int number){
 
     double a[number];
@@ -85,6 +86,7 @@ void insertSYNTIAPose(string&dir, Mat&pose, int number){
     myfile.close();    
 }
 
+// no using
 void outputCenterpoint(vector<vector<float> >& centerpoint, string txtname){
     ofstream outfile;
     outfile.open(txtname);
@@ -99,6 +101,7 @@ void outputCenterpoint(vector<vector<float> >& centerpoint, string txtname){
     outfile.close();
 }
 
+// no using
 void inputCenterpoint(vector<vector<float> >& centerpoint, int number, string txtname){
     ifstream myfile(txtname);
     int N;  
@@ -239,6 +242,52 @@ void gatherPointCloudData(pcl::PointCloud<pcl::PointXYZRGB>::Ptr& cloud, vector<
 
 }
 
+void gatherSYNTHIAPointCloudData(pcl::PointCloud<pcl::PointXYZRGB>::Ptr& cloud, vector<vector<float> >& centerpoint, Mat pose, Mat Label, vector<uchar> label_gray, vector<float> camera, float scale, string dir, int fileNumber, int startpoint){
+    //init the pointcloud mapping structure 
+    pointCloudMapping pointCloudMapping;
+    //initiallize the frame pose
+    Matrix4f frame_pose = Matrix4f::Identity();
+    Matrix4f frame_pose0 = Matrix4f::Identity();
+    Matrix4f camera_pose = Matrix4f::Identity();
+
+    for(int i =startpoint; i<fileNumber; i++){
+        cout<<"number: "<<i<<endl;
+        if(i%3 != 0 && i !=0){
+            //continue;
+        }
+
+        //load the pose of the current image
+        frame_pose = obtainTransformMatrix(pose, i, 1);
+        
+        if(i == startpoint){
+            frame_pose0 = frame_pose;
+        }
+        camera_pose = frame_pose0.inverse() * frame_pose;
+
+        //load the rgb image, depth image and the segmentation image
+        char base_name[256];
+        sprintf(base_name,"%d.png",i);
+        string depth_file_name =dir+"depth/depth_" + base_name;
+        string rgb_file = dir+"segmentation/segmentation_"+base_name;
+        //only SYNTHIA need
+        string label_file = dir+"label/segmentation_"+base_name;
+
+        Mat depth = imread(depth_file_name,0);
+        Mat image_rgb = imread(rgb_file);
+        //only SYNTHIA need
+        Mat lab = imread(label_file,0);
+
+        //3D recontrcute the points
+        pointCloudMapping.insertValue(cloud, depth, image_rgb, frame_pose, camera, scale, centerpoint, Label);
+        pointCloudMapping.pointExtraction(label_gray);
+        centerpoint = pointCloudMapping.Cpoint;    
+        cloud = pointCloudMapping.outputPointCloud();
+        //viewer.showCloud(cloud);
+        waitKey(1);    
+    }
+
+}
+// no using
 void gatherDenseMap(pcl::PointCloud<pcl::PointXYZRGB>::Ptr& cloud, vector<vector<float> >& centerpoint, Mat pose, Mat Label, vector<float> camera, float scale, string dir, int fileNumber, int type){
     //init the pointcloud mapping structure 
     pointCloudMapping pointCloudMapping;
@@ -277,6 +326,7 @@ void gatherDenseMap(pcl::PointCloud<pcl::PointXYZRGB>::Ptr& cloud, vector<vector
 
 }
 
+// no using
 void matchingEvaluation(vector<vector<float> > Cpoint1, vector<vector<float> > Cpoint2, MatrixXi matcherID, MatrixXi InlierID, float& Pvalue, float& Rvalue, float& Pcount1){
     int size0 = matcherID.rows();
     float Pcount0 = 0; float Ncount0 = 0;
@@ -322,6 +372,7 @@ void matchingEvaluation(vector<vector<float> > Cpoint1, vector<vector<float> > C
 
 }
 
+// no using
 void calculateGroundTruth(Mat pose1, Mat pose2, MatrixXf Rotation, MatrixXf translation, Matrix4f& T){
     Matrix4f frame_pose1 = Matrix4f::Identity();
     Matrix4f frame_pose2 = Matrix4f::Identity();

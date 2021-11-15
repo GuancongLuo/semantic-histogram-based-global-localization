@@ -37,7 +37,7 @@ int main(int argc, const char * argv[])
 
     string dir1 = fullpath1;
     string dir2 = fullpath2;
-    //generate the camera parameter
+    // generate the camera parameter (每个数据集都是？)
     vector<float> camera(4);
     float scale = 1;
     camera[0] = 512; //fx
@@ -133,8 +133,8 @@ int main(int argc, const char * argv[])
     // cout<<"final distance: "<<finalDistance<<endl;
 
 
-    // //plot the semantic point and matching with PCL library  
-    // pointCloudMapping pointCloudMapping;
-    // pointCloudMapping.pointVisuallize(cloud1, cloud2, inlierID, R, T);
+    //plot the semantic point and matching with PCL library  
+    pointCloudMapping pointCloudMapping;
+    pointCloudMapping.pointVisuallize(cloud1, cloud2, inlierID, R, T);
     
 }
