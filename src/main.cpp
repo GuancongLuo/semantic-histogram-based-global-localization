@@ -138,6 +138,6 @@ int main(int argc, const char * argv[])
     pointCloudMapping.pointVisuallize(cloud1, cloud2, inlierID, R, T);
 
     int type = 1;
-    gatherDenseMap(cloud1,centerpoint1,,pose1,Label,camera,scale,dir1,fileNumber1,type);
+    gatherDenseMap(cloud1,centerpoint1,pose1,Label,camera,scale,dir1,fileNumber1,type);
     
 }
