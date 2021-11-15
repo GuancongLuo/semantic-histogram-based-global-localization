@@ -242,6 +242,7 @@ void gatherPointCloudData(pcl::PointCloud<pcl::PointXYZRGB>::Ptr& cloud, vector<
 
 }
 
+// no using
 void gatherSYNTHIAPointCloudData(pcl::PointCloud<pcl::PointXYZRGB>::Ptr& cloud, vector<vector<float> >& centerpoint, Mat pose, Mat Label, vector<uchar> label_gray, vector<float> camera, float scale, string dir, int fileNumber, int startpoint){
     //init the pointcloud mapping structure 
     pointCloudMapping pointCloudMapping;
@@ -287,6 +288,7 @@ void gatherSYNTHIAPointCloudData(pcl::PointCloud<pcl::PointXYZRGB>::Ptr& cloud, 
     }
 
 }
+
 // no using
 void gatherDenseMap(pcl::PointCloud<pcl::PointXYZRGB>::Ptr& cloud, vector<vector<float> >& centerpoint, Mat pose, Mat Label, vector<float> camera, float scale, string dir, int fileNumber, int type){
     //init the pointcloud mapping structure 
