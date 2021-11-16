@@ -52,6 +52,7 @@ int main(int argc, const char * argv[])
 
     //create the value for visual odometry
     Mat frame_pose = cv::Mat::eye(4, 4, CV_64F);
+    pcl::PointCloud<pcl::PointXYZRGB>::Ptr cloud3(new pcl::PointCloud<pcl::PointXYZRGB>);
     pcl::PointCloud<pcl::PointXYZRGB>::Ptr cloud2(new pcl::PointCloud<pcl::PointXYZRGB>);
     pcl::PointCloud<pcl::PointXYZRGB>::Ptr cloud1(new pcl::PointCloud<pcl::PointXYZRGB>);
 
@@ -88,8 +89,12 @@ int main(int argc, const char * argv[])
     gatherPointCloudData(cloud1, centerpoint1, pose1, Label, label_gray, camera, scale, dir1, fileNumber1, startPoint1);
     gatherPointCloudData(cloud2, centerpoint2, pose2, Label, label_gray, camera, scale, dir2, fileNumber2, startPoint2);
     
+    cloud3 += cloud1;
+    cloud3 += cloud2;    
+
     pcl::visualization::CloudViewer viewer("viewer");
-    viewer.showCloud(cloud1);
+
+    viewer.showCloud(cloud3);
     while (!viewer.wasStopped())
     {
         
