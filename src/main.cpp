@@ -90,6 +90,11 @@ int main(int argc, const char * argv[])
     
     pcl::visualization::CloudViewer viewer("viewer");
     viewer.showCloud(cloud1);
+    while (!viewer.wasStopped)
+    {
+        
+    }
+    
 
 
 
