@@ -88,45 +88,50 @@ int main(int argc, const char * argv[])
     gatherPointCloudData(cloud1, centerpoint1, pose1, Label, label_gray, camera, scale, dir1, fileNumber1, startPoint1);
     gatherPointCloudData(cloud2, centerpoint2, pose2, Label, label_gray, camera, scale, dir2, fileNumber2, startPoint2);
     
-    //add the edge between the neighborhood
-    Neighborhood Nei1(centerpoint1);
+    pcl::visualization::CloudViewer viewer("viewer");
+    viewer.showCloud(cloud1);
 
-    //MatrixXf neighbor;
-    Neighborhood Nei2(centerpoint2);
-    //neighbor = Nei2.getNeighbor();
-    //cout<<neighbor<<endl;
 
-    //obtain the descriptor
-    MatrixXf descriptor1;
-    Descriptor Des1(Nei1, 1);
-    //descriptor1 = Des1.getDescriptor(4);
-    //cout<<descriptor1<<endl;
 
-    MatrixXf descriptor2;
-    Descriptor Des2(Nei2, 1);
-    // descriptor2 = Des2.getDescriptor(23);
-    // cout<<descriptor2<<endl;
+    // //add the edge between the neighborhood
+    // Neighborhood Nei1(centerpoint1);
+
+    // //MatrixXf neighbor;
+    // Neighborhood Nei2(centerpoint2);
+    // //neighbor = Nei2.getNeighbor();
+    // //cout<<neighbor<<endl;
+
+    // //obtain the descriptor
+    // MatrixXf descriptor1;
+    // Descriptor Des1(Nei1, 1);
+    // //descriptor1 = Des1.getDescriptor(4);
+    // //cout<<descriptor1<<endl;
+
+    // MatrixXf descriptor2;
+    // Descriptor Des2(Nei2, 1);
+    // // descriptor2 = Des2.getDescriptor(23);
+    // // cout<<descriptor2<<endl;
     
-    //matching
-    MatrixXi matcherID;
-    matcher matches(Des1, Des2, 2);
-    matcherID = matches.getGoodMatcher();
-    //cout<<matcherID<<endl;
+    // //matching
+    // MatrixXi matcherID;
+    // matcher matches(Des1, Des2, 2);
+    // matcherID = matches.getGoodMatcher();
+    // //cout<<matcherID<<endl;
 
-    //begain registration
-    //insert the value
-    registration registration(centerpoint1, centerpoint2, matcherID);
+    // //begain registration
+    // //insert the value
+    // registration registration(centerpoint1, centerpoint2, matcherID);
 
-    //reject the outliers with ICP-RANSAC method
-    registration.matcherRANSAC(10);
-    MatrixXi inlierID;
-    inlierID = registration.inlierID;
+    // //reject the outliers with ICP-RANSAC method
+    // registration.matcherRANSAC(10);
+    // MatrixXi inlierID;
+    // inlierID = registration.inlierID;
 
-    //final pose estiamation
-    registration.Alignment();
+    // //final pose estiamation
+    // registration.Alignment();
     
-    R = registration.Rotation;
-    T = registration.Translation;
+    // R = registration.Rotation;
+    // T = registration.Translation;
     
     // float finalDistance = sqrt(pow(T(0, 0), 2) + pow(T(1, 0),2) + pow(T(2, 0),2));
     
@@ -134,10 +139,11 @@ int main(int argc, const char * argv[])
 
 
     //plot the semantic point and matching with PCL library  
-    pointCloudMapping pointCloudMapping;
-    pointCloudMapping.pointVisuallize(cloud1, cloud2, inlierID, R, T);
+    // pointCloudMapping pointCloudMapping;
+    // pointCloudMapping.pointVisuallize(cloud1, cloud2, inlierID, R, T);
 
-    // int type = 1;
-    gatherDenseMap(cloud1,centerpoint1,pose1,Label,camera,scale,dir1,fileNumber1,0);
+    // // int type = 1;
+    // gatherDenseMap(cloud1,centerpoint1,pose1,Label,camera,scale,dir1,fileNumber1,0);
+
     
 }
