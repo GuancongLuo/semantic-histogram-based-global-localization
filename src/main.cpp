@@ -91,8 +91,8 @@ int main(int argc, const char * argv[])
     gatherPointCloudData(cloud1, centerpoint1, pose1, Label, label_gray, camera, scale, dir1, fileNumber1, startPoint1);
     gatherPointCloudData(cloud2, centerpoint2, pose2, Label, label_gray, camera, scale, dir2, fileNumber2, startPoint2);
     
-    pcl::io::savePCDFileASCII("cloud1.pcd",cloud1);
-    pcl::io::savePCDFileASCII("cloud2.pcd",cloud2);
+    pcl::io::savePCDFileASCII("cloud1.pcd",*cloud1);
+    pcl::io::savePCDFileASCII("cloud2.pcd",*cloud2);
 
     pcl::visualization::CloudViewer viewer("viewer");
 
