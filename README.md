@@ -40,7 +40,15 @@ eg:
 ```
  ./mapAlignment forwardCar 0 343 backwardCar 0 300
  ```
- 
+
+可视化：
+前提 sudo apt install pcl-tools
+同时显示两个点云：
+pcl_viewer cloud1.pcd cloud2pcd
+修改点云颜色显示：
+pcl_viewer -fc 0,255,0 cloud1.pcd -fc 0,0,255 cloud2pcd
+
+
 ### Citation
 ```
 @inproceedings{XiyueGuo2021,
