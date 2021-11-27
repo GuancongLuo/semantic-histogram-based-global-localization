@@ -243,7 +243,7 @@ void gatherPointCloudData(pcl::PointCloud<pcl::PointXYZRGB>::Ptr& cloud, vector<
 }
 
 // no using
-void gatherSYNTHIAPointCloudData(pcl::PointCloud<pcl::PointXYZRGB>::Ptr& cloud, vector<vector<float> >& centerpoint, Mat pose, Mat Label, vector<uchar> label_gray, vector<float> camera, float scale, string dir, int fileNumber, int startpoint){
+void gatherSYNTHIAPointCloudData(pcl::PointCloud<pcl::PointXYZRGB>::Ptr& cloud, vector<vector<float> >& centerpoint, Mat pose, vector<uchar> label_gray, vector<float> camera, float scale, string dir, int fileNumber, int startpoint){
     //init the pointcloud mapping structure 
     pointCloudMapping pointCloudMapping;
     //initiallize the frame pose
@@ -267,16 +267,16 @@ void gatherSYNTHIAPointCloudData(pcl::PointCloud<pcl::PointXYZRGB>::Ptr& cloud, 
 
         //load the rgb image, depth image and the segmentation image
         char base_name[256];
-        sprintf(base_name,"%d.png",i);
-        string depth_file_name =dir+"depth/depth_" + base_name;
-        string rgb_file = dir+"segmentation/segmentation_"+base_name;
+        sprintf(base_name,"%06d.png",i);
+        string depth_file_name =dir+"depth/" + base_name;
+        string rgb_file = dir+"segmentation/"+base_name;
         //only SYNTHIA need
-        string label_file = dir+"label/segmentation_"+base_name;
+        string label_file = dir+"label/"+base_name;
 
         Mat depth = imread(depth_file_name,0);
         Mat image_rgb = imread(rgb_file);
         //only SYNTHIA need
-        Mat lab = imread(label_file,0);
+        Mat Label = imread(label_file,0);
 
         //3D recontrcute the points
         pointCloudMapping.insertValue(cloud, depth, image_rgb, frame_pose, camera, scale, centerpoint, Label);

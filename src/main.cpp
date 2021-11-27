@@ -92,16 +92,18 @@ int main(int argc, const char * argv[])
     // gatherPointCloudData(cloud2, centerpoint2, pose2, Label, label_gray, camera, scale, dir2, fileNumber2, startPoint2);
     
 
-    gatherDenseMap(cloud1, centerpoint1,  pose1,  Label,  camera,  scale,  dir1,  fileNumber1,  0);
-    gatherDenseMap(cloud2, centerpoint2,  pose2,  Label,  camera,  scale,  dir2,  fileNumber2,  0);
+    // gatherDenseMap(cloud1, centerpoint1,  pose1,  Label,  camera,  scale,  dir1,  fileNumber1,  0);
+    // gatherDenseMap(cloud2, centerpoint2,  pose2,  Label,  camera,  scale,  dir2,  fileNumber2,  0);
+
+    gatherSYNTHIAPointCloudData(cloud1, centerpoint1, pose1, label_gray, camera, scale, dir1, fileNumber1, startPoint1);
 
 
-    pcl::io::savePCDFileASCII("cloud1_dense.pcd",*cloud1);
-    pcl::io::savePCDFileASCII("cloud2_dense.pcd",*cloud2);
+    pcl::io::savePCDFileASCII("cloud1_SYNTHIA.pcd",*cloud1);
+    // pcl::io::savePCDFileASCII("cloud2_dense.pcd",*cloud2);
 
     pcl::visualization::CloudViewer viewer("viewer");
 
-    viewer.showCloud(cloud2);
+    viewer.showCloud(cloud1);
     while (!viewer.wasStopped())
     {
         
