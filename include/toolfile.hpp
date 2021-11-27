@@ -34,6 +34,7 @@ void insertSYNTIAPose(string&dir, Mat&pose, int number);
 
 cv::Mat Quaternion2Matrix (cv::Mat q);
 
+void gatherSYNTHIAPointCloudData(pcl::PointCloud<pcl::PointXYZRGB>::Ptr& cloud, vector<vector<float> >& centerpoint, Mat pose, vector<uchar> label_gray, vector<float> camera, float scale, string dir, int fileNumber, int startpoint);
 void gatherPointCloudData(pcl::PointCloud<pcl::PointXYZRGB>::Ptr& cloud, vector<vector<float> >& centerpoint, Mat pose, Mat Label, vector<uchar> label_gray, vector<float> camera, float scale, string dir, int fileNumber, int startpoint);
 void gatherDenseMap(pcl::PointCloud<pcl::PointXYZRGB>::Ptr& cloud, vector<vector<float> >& centerpoint, Mat pose, Mat Label, vector<float> camera, float scale, string dir, int fileNumber, int type);
 void calculateGroundTruth(Mat pose1, Mat pose2, MatrixXf Rotation, MatrixXf translation, Matrix4f& T);
