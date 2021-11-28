@@ -263,40 +263,26 @@ void gatherPointCloudData(pcl::PointCloud<pcl::PointXYZRGB>::Ptr& cloud, vector<
 }
 
 // no using
-void gatherSYNTHIAPointCloudData(pcl::PointCloud<pcl::PointXYZRGB>::Ptr& cloud, vector<vector<float> >& centerpoint, Mat pose, vector<uchar> label_gray, vector<float> camera, float scale, string dir, int fileNumber, int startpoint){
+void gatherSYNTHIAPointCloudData(pcl::PointCloud<pcl::PointXYZRGB>::Ptr& cloud, vector<vector<float> >& centerpoint, vector<uchar> label_gray, vector<float> camera, float scale, string dir, int fileNumber, int startpoint){
     //init the pointcloud mapping structure 
     pointCloudMapping pointCloudMapping;
     //initiallize the frame pose
     Matrix4f frame_pose = Matrix4f::Identity();
-    Matrix4f frame_pose0 = Matrix4f::Identity();
-    Matrix4f camera_pose = Matrix4f::Identity();
 
     for(int i =startpoint; i<fileNumber; i++){
         cout<<"number: "<<i<<endl;
-        if(i%3 != 0 && i !=0){
-            //continue;
-        }
-
-        //load the pose of the current image
-        frame_pose = obtainTransformMatrix(pose, i, 1);
-        
-        if(i == startpoint){
-            frame_pose0 = frame_pose;
-        }
-        camera_pose = frame_pose0.inverse() * frame_pose;
-
         //load the rgb image, depth image and the segmentation image
         char base_name[256];
-        sprintf(base_name,"%06d.png",i);
-        string depth_file_name =dir+"depth/" + base_name;
-        string rgb_file = dir+"segmentation/"+base_name;
-        //only SYNTHIA need
-        string label_file = dir+"label/"+base_name;
+        sprintf(base_name,"%06d",i);
+        string depth_file_name =dir+"depth/" + base_name + ".png";
+        string rgb_file_name = dir+"segmentation/" + base_name + ".png";
+        string camera_file_name = dir+"camera/" + base_name + ".txt";
+        string label_file_name = dir+"label/"+base_name + ".png";
 
         Mat depth = imread(depth_file_name,0);
-        Mat image_rgb = imread(rgb_file);
-        //only SYNTHIA need
-        Mat Label = imread(label_file,0);
+        Mat image_rgb = imread(rgb_file_name);
+        frame_pose = obtainGlobalCamerPoseMatrix(camera_file_name);
+        Mat Label = imread(label_file_name,0);
 
         //3D recontrcute the points
         pointCloudMapping.insertValue(cloud, depth, image_rgb, frame_pose, camera, scale, centerpoint, Label);

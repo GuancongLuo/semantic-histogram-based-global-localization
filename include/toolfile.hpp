@@ -36,7 +36,7 @@ cv::Mat Quaternion2Matrix (cv::Mat q);
 Matrix4f obtainGlobalCamerPoseMatrix(string txtname);
 
 
-void gatherSYNTHIAPointCloudData(pcl::PointCloud<pcl::PointXYZRGB>::Ptr& cloud, vector<vector<float> >& centerpoint, Mat pose, vector<uchar> label_gray, vector<float> camera, float scale, string dir, int fileNumber, int startpoint);
+void gatherSYNTHIAPointCloudData(pcl::PointCloud<pcl::PointXYZRGB>::Ptr& cloud, vector<vector<float> >& centerpoint, vector<uchar> label_gray, vector<float> camera, float scale, string dir, int fileNumber, int startpoint);
 void gatherPointCloudData(pcl::PointCloud<pcl::PointXYZRGB>::Ptr& cloud, vector<vector<float> >& centerpoint, Mat pose, Mat Label, vector<uchar> label_gray, vector<float> camera, float scale, string dir, int fileNumber, int startpoint);
 void gatherSYNTHIADenseMap(pcl::PointCloud<pcl::PointXYZRGB>::Ptr& cloud, vector<vector<float> >& centerpoint, vector<float> camera, float scale, string dir, int fileNumber, int type);
 void gatherDenseMap(pcl::PointCloud<pcl::PointXYZRGB>::Ptr& cloud, vector<vector<float> >& centerpoint, Mat pose, Mat Label, vector<float> camera, float scale, string dir, int fileNumber, int type);
