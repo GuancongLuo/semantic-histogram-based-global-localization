@@ -196,6 +196,26 @@ Matrix4f obtainTransformMatrix(Mat pose, int i, int type){
     return frame_pose;
 }
 
+Matrix4f obtainGlobalCamerPoseMatrix(string txtname){
+    Matrix4f frame_pose = Matrix4f::Identity();
+    float a[16];
+    int row;
+    int col;
+
+    ifstream camera_file(txtname);
+    camera_file>>a[0]>>a[1]>>a[2]>>a[3]>>a[4]>>a[5]>>a[6]>>a[7]>>a[8]>>a[9]>>a[10]>>a[11]>>a[12]>>a[13]>>a[14]>>a[15];
+
+    for(int i=0;i<16;i++){
+        
+        row = i%4;
+        col = i/4;
+
+        frame_pose(row, col) = a[i];
+    }
+
+    return frame_pose;
+}
+
 void gatherPointCloudData(pcl::PointCloud<pcl::PointXYZRGB>::Ptr& cloud, vector<vector<float> >& centerpoint, Mat pose, Mat Label, vector<uchar> label_gray, vector<float> camera, float scale, string dir, int fileNumber, int startpoint){
     //init the pointcloud mapping structure 
     pointCloudMapping pointCloudMapping;
@@ -328,6 +348,42 @@ void gatherDenseMap(pcl::PointCloud<pcl::PointXYZRGB>::Ptr& cloud, vector<vector
 
 }
 
+
+void gatherSYNTHIADenseMap(pcl::PointCloud<pcl::PointXYZRGB>::Ptr& cloud, vector<vector<float> >& centerpoint, vector<float> camera, float scale, string dir, int fileNumber, int type){
+    //init the pointcloud mapping structure 
+    pointCloudMapping pointCloudMapping;
+    //initiallize the frame pose
+    Matrix4f frame_pose = Matrix4f::Identity();
+    pcl::visualization::CloudViewer viewer("viewer");
+
+    for(int i =0; i<fileNumber; i++){
+        //load the rgb image, depth image and the segmentation image
+        char base_name[256];
+        sprintf(base_name,"%06d",i);
+        string depth_file_name =dir+"depth/" + base_name + ".png";
+        string rgb_file_name = dir+"segmentation/" + base_name + ".png";
+        string camera_file_name = dir+"camera/" + base_name + ".txt";
+        string label_file_name = dir+"label/"+base_name + ".png";
+
+        cout<<depth_file_name<<endl;
+        cout<<rgb_file_name<<endl;
+        cout<<camera_file_name<<endl;
+        cout<<label_file_name<<endl;
+
+        Mat depth = imread(depth_file_name,0);
+        Mat image_rgb = imread(rgb_file_name);
+        frame_pose = obtainGlobalCamerPoseMatrix(camera_file_name);
+        Mat Label = imread(label_file_name,0);
+
+        //3D recontrcute the points
+        pointCloudMapping.insertValue(cloud, depth, image_rgb, frame_pose, camera, scale, centerpoint, Label);
+        pointCloudMapping.initialize3Dmap(type);
+        pointCloudMapping.pointCloudFilter();
+        cloud = pointCloudMapping.outputPointCloud();
+        viewer.showCloud(cloud);
+    }
+
+}
 // no using
 void matchingEvaluation(vector<vector<float> > Cpoint1, vector<vector<float> > Cpoint2, MatrixXi matcherID, MatrixXi InlierID, float& Pvalue, float& Rvalue, float& Pcount1){
     int size0 = matcherID.rows();

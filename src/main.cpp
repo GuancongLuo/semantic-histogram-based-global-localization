@@ -79,10 +79,6 @@ int main(int argc, const char * argv[])
     label_gray[0] = 72; label_gray[1] = 76; label_gray[2] = 165; label_gray[3] = 161; label_gray[4] = 134;
     label_gray[5] = 225; label_gray[6] = 110; label_gray[7] = 184; label_gray[8] = 71; label_gray[9] = 36;
     label_gray[10] = 117;
-
-    //insert the odeometry value
-    insertPose(dir1,pose1, 1000);
-    insertPose(dir2,pose2, 1000);
     
     //initiallize the intial value of the keypoint;
     vector<vector<float> > centerpoint2;
@@ -95,8 +91,8 @@ int main(int argc, const char * argv[])
     // gatherDenseMap(cloud1, centerpoint1,  pose1,  Label,  camera,  scale,  dir1,  fileNumber1,  0);
     // gatherDenseMap(cloud2, centerpoint2,  pose2,  Label,  camera,  scale,  dir2,  fileNumber2,  0);
 
-    gatherSYNTHIAPointCloudData(cloud1, centerpoint1, pose1, label_gray, camera, scale, dir1, fileNumber1, startPoint1);
-
+    // gatherSYNTHIAPointCloudData(cloud1, centerpoint1, pose1, label_gray, camera, scale, dir1, fileNumber1, startPoint1);
+    gatherSYNTHIADenseMap(cloud1, centerpoint1,  camera,  scale,  dir1,  fileNumber1,  0);
 
     pcl::io::savePCDFileASCII("cloud1_SYNTHIA.pcd",*cloud1);
     // pcl::io::savePCDFileASCII("cloud2_dense.pcd",*cloud2);
