@@ -1,0 +1,15 @@
+怎么使用docker
+
+1、启动镜像
+docker run -p 6080:80 -v /dev/shm:/dev/shm clarenceluo/gxytcrc:v1
+
+2、打开浏览器
+Browse http://127.0.0.1:6080/
+
+
+如何使用程序
+
+cd ~/gxytcrc/Semantic-Graph-based--global-Localization/build
+
+ ./mapAlignment forwardCar 0 343 backwardCar 0 300
+
