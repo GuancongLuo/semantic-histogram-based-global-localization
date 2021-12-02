@@ -44,6 +44,7 @@ void calculateGroundTruth(Mat pose1, Mat pose2, MatrixXf Rotation, MatrixXf tran
 void matchingEvaluation(vector<vector<float> > Cpoint1, vector<vector<float> > Cpoint2, MatrixXi matcherID, MatrixXi InlierID, float& Pvalue, float& Rvalue, float& Pcount1);
 void outputCenterpoint(vector<vector<float> >& centerpoint, string txtname);
 void inputCenterpoint(vector<vector<float> >& centerpoint, int number, string txtname);
+vector<uchar> GetLabelGray(Mat Label);
 
 
 #endif /* pointCloudMapping */

@@ -472,3 +472,16 @@ void calculateGroundTruth(Mat pose1, Mat pose2, MatrixXf Rotation, MatrixXf tran
 
 }
 
+vector<uchar> GetLabelGray(Mat Label){
+    vector<uchar> label_gray(Label.rows);
+    for( size_t nrow = 0; nrow < Label.rows; nrow++)  
+    {  
+        int value_r = (int)Label.at<int>(nrow, 0);
+        int value_g = (int)Label.at<int>(nrow, 1);
+        int value_b = (int)Label.at<int>(nrow, 2);
+        int gray_value = 0.299 * value_r +0.587 * value_g + 0.114 * value_b;
+        std::cout << gray_value << '|' ;
+       label_gray[nrow] = gray_value;
+    } 
+    return label_gray;
+}

@@ -42,10 +42,10 @@ int main(int argc, const char * argv[])
     // generate the camera parameter (每个数据集都是？)
     vector<float> camera(4);
     float scale = 1;
-    camera[0] = 512; //fx
-    camera[1] = 512; //fy
-    camera[2] = 512; //cx
-    camera[3] = 288;//cy
+    camera[0] = 532.740352; //fx
+    camera[1] = 532.740352; //fy
+    camera[2] = 640; //cx
+    camera[3] = 380;//cy
 
     //iniltialize the R and T
     MatrixXf R, T;
@@ -62,23 +62,25 @@ int main(int argc, const char * argv[])
     Mat pose2 = cv::Mat::zeros(1000, 7, CV_64FC1);
 
     //generate the correspondent rgb value of all labels in the segmentation image
-    Mat Label = (cv::Mat_<int>(11, 3)<< 175, 6, 140,
-                                    65, 54, 217,
-                                    156, 198, 23,
-                                    184, 145, 182,
-                                    211, 80, 208,
-                                    232, 250, 80,
-                                    234, 20, 250,
-                                    99, 242, 104,
-                                    142, 1, 246,
-                                    81, 13, 36,
-                                    112, 105, 191);
+     Mat Label = (cv::Mat_<int>(13, 3)<< 0, 0, 0,
+                                    128, 128, 128,
+                                    128, 0, 0,
+                                    128, 64, 128,
+                                    0, 0, 192,
+                                    64, 64, 0,
+                                    128,128,0,
+                                    192, 192, 128,
+                                    64, 0, 128,
+                                    192, 128, 128,
+                                    64, 64, 0,
+                                    0, 128, 192,
+                                    0,175,0);
 
     //Obtain the label number
-    vector<uchar> label_gray(11);
-    label_gray[0] = 72; label_gray[1] = 76; label_gray[2] = 165; label_gray[3] = 161; label_gray[4] = 134;
-    label_gray[5] = 225; label_gray[6] = 110; label_gray[7] = 184; label_gray[8] = 71; label_gray[9] = 36;
-    label_gray[10] = 117;
+    vector<uchar> label_gray = GetLabelGray(Label);
+    // label_gray[0] = 72; label_gray[1] = 76; label_gray[2] = 165; label_gray[3] = 161; label_gray[4] = 134;
+    // label_gray[5] = 225; label_gray[6] = 110; label_gray[7] = 184; label_gray[8] = 71; label_gray[9] = 36;
+    // label_gray[10] = 117;
     
     //initiallize the intial value of the keypoint;
     vector<vector<float> > centerpoint2;
