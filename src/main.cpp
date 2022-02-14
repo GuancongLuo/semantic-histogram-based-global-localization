@@ -7,19 +7,39 @@
 #include "registration.hpp"
 #include <pcl/io/pcd_io.h>  //PCD读写类相关的头文件
 #include <pcl/point_types.h>    //PCL中支持的点类型头文件
-
+#include "json.hpp" 
 
 using namespace cv;
 using namespace std;
 using namespace Eigen;
 
+using json = nlohmann::json;
+
+#include <iostream>
+#include <fstream>
+#include <string>
+
 
 int main(int argc, const char * argv[])
 {
-    if(argc!=7)
+    // if(argc!=7)
+    // {
+    //     cout << "usage: ./SLAM_Project address frameCount" << endl;
+    //     return 1;
+    // }
+
+    json j; 
+
+    std::string filename = "../src/config.json";
+
+    std::fstream s(filename);
+    if (!s.is_open())
     {
-        cout << "usage: ./SLAM_Project address frameCount" << endl;
-        return 1;
+        std::cout << "failed to open " << filename << '\n';
+    }
+    else
+    {
+        s >> j;
     }
 
     char file_name1[1024];
