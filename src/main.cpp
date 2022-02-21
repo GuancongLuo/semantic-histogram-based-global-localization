@@ -23,12 +23,6 @@ using json = nlohmann::json;
 
 int main(int argc, const char * argv[])
 {
-    // if(argc!=7)
-    // {
-    //     cout << "usage: ./SLAM_Project address frameCount" << endl;
-    //     return 1;
-    // }
-
     json j; 
 
     std::string filename = "../src/config.json";
@@ -43,30 +37,30 @@ int main(int argc, const char * argv[])
         s >> j;
     }
 
-    char file_name1[1024];
-    char fullpath1[1024];
-    char file_name2[1024];
-    char fullpath2[1024];
+    std::string data_dir = j["Dataset_dir_abs_path"];
+    std::string file_name1 = j["pointcloud1"]["file_name"];
+    std::string dir1 = data_dir + file_name1;
+    std::cout << dir1 << std::endl;
+    std::string file_name2 = j["pointcloud2"]["file_name"];
+    std::string dir2 = data_dir + file_name2;    
+    std::cout << dir2 << std::endl;
+    int startPoint1 = j["pointcloud1"]["star_address"];
+    int fileNumber1 = j["pointcloud1"]["end_address"];
+    int startPoint2 = j["pointcloud1"]["star_address"];
+    int fileNumber2 = j["pointcloud1"]["end_address"];
 
-    sprintf(file_name1, "%s/", argv[1]);
-    sprintf(fullpath1,"/Documents/robot_ws/semantic-histogram-based-global-localization/Dataset/%s",file_name1);
-    int startPoint1 = atoi(argv[2]);
-    int fileNumber1 = atoi(argv[3]);
-    cout<<"file number is: "<<fileNumber1<<endl;
-    sprintf(file_name2, "%s/", argv[4]);
-    sprintf(fullpath2,"/Documents/robot_ws/semantic-histogram-based-global-localization/Dataset/%s",file_name2);
-    int startPoint2 = atoi(argv[5]);
-    int fileNumber2 = atoi(argv[6]);
 
-    string dir1 = fullpath1;
-    string dir2 = fullpath2;
-    //generate the camera parameter
+    // generate the camera parameter (每个数据集都是？)
     vector<float> camera(4);
     float scale = 1;
-    camera[0] = 2066; //fx
-    camera[1] = 2120; //fy
-    camera[2] = 1354; //cx
-    camera[3] = 372;//cy
+    camera[0] = j["camera"]["fx"].get<float>(); //fx
+    camera[1] = j["camera"]["fy"].get<float>(); //fy
+    camera[2] = j["camera"]["cx"].get<float>(); //cx
+    camera[3] = j["camera"]["cy"].get<float>(); //cy
+
+    for(float f : camera){
+        std::cout <<"camera params: "<< f << std::endl;
+    }
 
     //iniltialize the R and T
     MatrixXf R, T;
@@ -113,7 +107,10 @@ int main(int argc, const char * argv[])
     pcl::io::savePCDFileASCII("cloud1_3500_dense.pcd",*cloud1);
     pcl::io::savePCDFileASCII("cloud2_3700_dense.pcd",*cloud2);
 
-    return 0;
+    if (j["is_only_get_point_cloud"])
+    {
+        return 0;
+    }
 
     //add the edge between the neighborhood
     Neighborhood Nei1(centerpoint1);
