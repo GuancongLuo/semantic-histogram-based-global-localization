@@ -1,25 +1,27 @@
 {
     "is_only_get_point_cloud": true,
-    "Dataset_dir_abs_path":"/home/Document/Dataset",
-    "pointcloud1":{
-            "point_cloud_name": "pointcloud1",
-            "file_name":"/ForwardCar",
-            "star_address": 400,
-            "end_address": 700
+    "is_get_dense_map":false,
+    "Dataset_dir_abs_path": "/Documents/robot_ws/semantic-histogram-based-global-localization/Dataset",
+    "pointcloud1": {
+        "point_cloud_name": "cloudA.pcd",
+        "dense_point_cloud_name": "cloudA_dense.pcd",
+        "depth_file_name": "/forwardCar/depth-part2",
+        "seg_file_name": "/forwardCar/seg-part2",
+        "star_address": 3500,
+        "end_address": 4000
     },
-
-    "pointcloud2":{
-        "point_cloud_name": "pointcloud2",
-        "file_name":"/ForwardCar",
-        "star_address": 400,
-        "end_address": 700
+    "pointcloud2": {
+        "point_cloud_name": "cloudB.pcd",
+        "dense_point_cloud_name": "cloudB_dense.pcd",
+        "depth_file_name": "/forwardCar/depth-part2",
+        "seg_file_name": "/forwardCar/seg-part2",
+        "star_address": 3500,
+        "end_address": 3700
     },
-
-    "camera":{
+    "camera": {
         "fx": 532.74,
         "fy": 532.74,
         "cx": 640,
         "cy": 380
     }
-
 }

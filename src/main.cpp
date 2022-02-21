@@ -38,16 +38,24 @@ int main(int argc, const char * argv[])
     }
 
     std::string data_dir = j["Dataset_dir_abs_path"];
-    std::string file_name1 = j["pointcloud1"]["file_name"];
-    std::string dir1 = data_dir + file_name1;
-    std::cout << dir1 << std::endl;
-    std::string file_name2 = j["pointcloud2"]["file_name"];
-    std::string dir2 = data_dir + file_name2;    
-    std::cout << dir2 << std::endl;
+
+    vector<std::string> dir1(2);
+    vector<std::string> dir2(2);
+
+    std::string depth_file_name1 = j["pointcloud1"]["depth_file_name"];    
+    std::string seg_file_name1 = j["pointcloud1"]["seg_file_name"];
+    dir1[0] = data_dir + depth_file_name1;
+    dir1[1] = data_dir + seg_file_name1;
+
+    std::string depth_file_name2 = j["pointcloud2"]["depth_file_name"];    
+    std::string seg_file_name2 = j["pointcloud2"]["seg_file_name"];
+    dir2[0] = data_dir + depth_file_name2;
+    dir2[1] = data_dir + seg_file_name2;
+
     int startPoint1 = j["pointcloud1"]["star_address"];
-    int fileNumber1 = j["pointcloud1"]["end_address"];
-    int startPoint2 = j["pointcloud1"]["star_address"];
-    int fileNumber2 = j["pointcloud1"]["end_address"];
+    int endPoint1 = j["pointcloud1"]["end_address"];
+    int startPoint2 = j["pointcloud2"]["star_address"];
+    int endPoint2 = j["pointcloud2"]["end_address"];
 
 
     // generate the camera parameter (每个数据集都是？)
@@ -93,19 +101,29 @@ int main(int argc, const char * argv[])
     vector<uchar> label_gray = GetLabelGray(Label);
 
     //insert the odeometry value
-    insertPose(dir1,pose1, 4000);
-    insertPose(dir2,pose2, 4000);
+    // insertPose(dir1,pose1, 4000);
+    // insertPose(dir2,pose2, 4000);
     
     //initiallize the intial value of the keypoint;
     vector<vector<float> > centerpoint2;
     vector<vector<float> > centerpoint1;
     
-    gatherPointCloudData(cloud1, centerpoint1, pose1, Label, label_gray, camera, scale, dir1, fileNumber1, startPoint1);
-    gatherPointCloudData(cloud2, centerpoint2, pose2, Label, label_gray, camera, scale, dir2, fileNumber2, startPoint2);
+    if (j["is_get_dense_map"])
+    {
+        gatherDenseMap(cloud1, centerpoint1, pose1, Label, camera, scale, dir1, endPoint1, startPoint1, 1);
+        gatherDenseMap(cloud2, centerpoint2, pose2, Label, camera, scale, dir2, endPoint2, startPoint2, 1);
 
+        pcl::io::savePCDFileASCII(j["pointcloud1"]["dense_point_cloud_name"],*cloud1);
+        pcl::io::savePCDFileASCII(j["pointcloud2"]["dense_point_cloud_name"],*cloud2);
+    }
+    else{
+        gatherPointCloudData(cloud1, centerpoint1, pose1, Label, label_gray, camera, scale, dir1, endPoint1, startPoint1);
+        gatherPointCloudData(cloud2, centerpoint2, pose2, Label, label_gray, camera, scale, dir2, endPoint2, startPoint2);
 
-    pcl::io::savePCDFileASCII("cloud1_3500_dense.pcd",*cloud1);
-    pcl::io::savePCDFileASCII("cloud2_3700_dense.pcd",*cloud2);
+        pcl::io::savePCDFileASCII(j["pointcloud1"]["point_cloud_name"],*cloud1);
+        pcl::io::savePCDFileASCII(j["pointcloud2"]["point_cloud_name"],*cloud2);
+    }
+
 
     if (j["is_only_get_point_cloud"])
     {

@@ -299,7 +299,6 @@ void registration::matcherRANSAC(float Td){
     double inliCount = (double)(inlierID.rows());
     double performance = inliCount/AllCount;
     cout<<"inlier num: "<<inliCount<<endl;
-    cout<<"All num: "<<AllCount<<endl;
     cout<<"matching performance: "<<performance<<endl;
 
 }

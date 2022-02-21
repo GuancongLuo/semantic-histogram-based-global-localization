@@ -315,7 +315,7 @@ void pointCloudMapping::pointExtraction(vector<uchar> label){
     int imgRow = image.rows; int imgCol = image.cols;
     //cout<<image_gray.row(270)<<endl;
     pcl::PointCloud<pcl::PointXYZRGB>::Ptr temp(new pcl::PointCloud<pcl::PointXYZRGB>); 
-    for(int lab = 0; lab<11; lab++){
+    for(int lab = 0; lab<label.size(); lab++){
         Mat image_bw = cv::Mat::zeros(imgRow, imgCol, CV_8UC1);
         for(int row = 0; row<imgRow; row++){
             for(int col = 0; col<imgCol; col++){
@@ -475,7 +475,7 @@ void pointCloudMapping::pointVisuallize(pcl::PointCloud<pcl::PointXYZRGB>::Ptr&i
     // TransforMatrix(1, 3) = T(1, 0);
     // TransforMatrix(2, 3) = T(2, 0);
 
-    TransforMatrix(2, 3) = TransforMatrix(2, 3)+80;  
+    // TransforMatrix(2, 3) = TransforMatrix(2, 3)+80;  
     *temp1 = *insertCloud1;
     *temp2 = *insertCloud2;
     transformPointCloud (*temp1, *temp1, TransforMatrix);
@@ -507,6 +507,7 @@ void pointCloudMapping::pointVisuallize(pcl::PointCloud<pcl::PointXYZRGB>::Ptr&i
 
     }
 
+    pcl::io::savePCDFileASCII("cloud_all.pcd",*temp);
     // vector<VectorXd, Eigen::aligned_allocator<VectorXd>> pointcloud;
     // cout<<"global size: "<<insertCloud->points.size()<<endl;
     // for(int i = 0; i<insertCloud->points.size(); i++){

@@ -22,6 +22,9 @@
 #include<vector>
 #include "toolfile.hpp"
 
+#include <pcl/io/pcd_io.h>  //PCD读写类相关的头文件
+#include <pcl/point_types.h>    //PCL中支持的点类型头文件
+
 
 
 using namespace cv;
