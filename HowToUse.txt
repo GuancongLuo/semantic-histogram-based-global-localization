@@ -1,15 +1,23 @@
 怎么使用docker
 
 1、启动镜像
-docker run -p 6080:80 -v /dev/shm:/dev/shm clarenceluo/gxytcrc:v1
+docker run -p 6080:80 -v /home/clarence/Documents:/home/Documents clarenceluo/gxytcrc:v2
 
 2、打开浏览器
 Browse http://127.0.0.1:6080/
 
+如何编译
+mkdir build & cd build
+cmake ..
+make -j
 
 如何使用程序
 
 cd ~/gxytcrc/Semantic-Graph-based--global-Localization/build
 
- ./mapAlignment forwardCar 0 343 backwardCar 0 300
+ ./mapAlignment
+
+ 如何修改配置
+
+ 通过修改config.json来修改程序执行内容
 
