@@ -1,4 +1,6 @@
 #include "toolfile.hpp"
+#include <pcl/io/pcd_io.h>  //PCD读写类相关的头文件
+#include <pcl/point_types.h>    //PCL中支持的点类型头文件
 
 void insertPose(string&dir, Mat&pose, int number){
 
@@ -248,7 +250,7 @@ void gatherPointCloudData(pcl::PointCloud<pcl::PointXYZRGB>::Ptr& cloud, vector<
         pointCloudMapping.pointExtraction(label_gray);
         centerpoint = pointCloudMapping.Cpoint;    
         cloud = pointCloudMapping.outputPointCloud();
-        //viewer.showCloud(cloud);
+        // viewer.showCloud(cloud);
         waitKey(1);
 
         // //3D recontrcute the points Dense

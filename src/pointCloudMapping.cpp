@@ -466,20 +466,21 @@ void pointCloudMapping::pointVisuallize(pcl::PointCloud<pcl::PointXYZRGB>::Ptr&i
     pcl::PointCloud<pcl::PointXYZRGB>::Ptr temp2(new pcl::PointCloud<pcl::PointXYZRGB>);
     //obtain the clouds.
     Matrix4f TransforMatrix = Matrix4f::Identity();
-    // for(int row = 0; row<3; row++){
-    //     for(int col=0; col<3; col++){
-    //         TransforMatrix(row, col) = R(row, col);
-    //     }
-    // }
-    // TransforMatrix(0, 3) = T(0, 0);
-    // TransforMatrix(1, 3) = T(1, 0);
-    // TransforMatrix(2, 3) = T(2, 0);
+    for(int row = 0; row<3; row++){
+        for(int col=0; col<3; col++){
+            TransforMatrix(row, col) = R(row, col);
+        }
+    }
+    TransforMatrix(0, 3) = T(0, 0);
+    TransforMatrix(1, 3) = T(1, 0);
+    TransforMatrix(2, 3) = T(2, 0);
 
-    // TransforMatrix(2, 3) = TransforMatrix(2, 3)+80;  
+    TransforMatrix(2, 3) = TransforMatrix(2, 3);  
     *temp1 = *insertCloud1;
     *temp2 = *insertCloud2;
     transformPointCloud (*temp1, *temp1, TransforMatrix);
-    *temp = *temp1 + *temp2;
+    pcl::io::savePCDFileASCII("cloud_1_after_Transfor.pcd",*temp);
+    *temp = *temp1 + *temp2; //pcl viewer
     //obtain the line information
     int size = matcherID.rows();
 

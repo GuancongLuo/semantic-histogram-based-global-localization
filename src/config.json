@@ -1,5 +1,5 @@
 {
-    "is_only_get_point_cloud": true,
+    "is_only_get_point_cloud": false,
     "is_get_dense_map":false,
     "Dataset_dir_abs_path": "/Documents/robot_ws/semantic-histogram-based-global-localization/Dataset",
     "pointcloud1": {
@@ -15,13 +15,13 @@
         "dense_point_cloud_name": "cloudB_dense.pcd",
         "depth_file_name": "/forwardCar/depth-part2",
         "seg_file_name": "/forwardCar/seg-part2",
-        "star_address": 3500,
-        "end_address": 3700
+        "star_address": 3700,
+        "end_address": 4200
     },
     "camera": {
-        "fx": 532.74,
-        "fy": 532.74,
-        "cx": 640,
-        "cy": 380
-    }
+        "fx": 2066,
+        "fy": 2120,
+        "cx": 1355,
+        "cy": 373
+    }    
 }
