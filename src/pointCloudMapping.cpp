@@ -479,7 +479,7 @@ void pointCloudMapping::pointVisuallize(pcl::PointCloud<pcl::PointXYZRGB>::Ptr&i
     *temp1 = *insertCloud1;
     *temp2 = *insertCloud2;
     transformPointCloud (*temp1, *temp1, TransforMatrix);
-    pcl::io::savePCDFileASCII("cloud_1_after_Transfor.pcd",*temp);
+    pcl::io::savePCDFileASCII("cloud_1_after_Transfor.pcd",*temp1);
     *temp = *temp1 + *temp2; //pcl viewer
     //obtain the line information
     int size = matcherID.rows();
